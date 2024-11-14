@@ -7,6 +7,7 @@ DELIMITER //
 CREATE PROCEDURE spReadLeverancier()
 BEGIN
     SELECT
+       LEV.id as LeverancierId,
        Naam AS LeverancierNaam,
        ContactPersoon,
        LeverancierNummer,

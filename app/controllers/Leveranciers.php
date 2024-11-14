@@ -20,6 +20,6 @@ class Leveranciers extends BaseController
 
         $data['Leveranciers'] = $this->leverancierModel->LeverancierOverzicht();
 
-        $this->view('leverancier/index', $data);
+        $this->view('leveranciers/index', $data);
     }
 }
