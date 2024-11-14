@@ -11,7 +11,7 @@ define('DB_PASS', '');
 /**
  * De naam van de virtualhost
  */
-define('URLROOT', 'http://magazijn-jamin.com:8081');
+define('URLROOT', 'http://jamin.com:8081');
 
 
 /**

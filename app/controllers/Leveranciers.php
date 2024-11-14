@@ -1,22 +1,25 @@
 <?php
 
-class Homepages extends BaseController
+class Leveranciers extends BaseController
 {
+    private $leverancierModel;
 
-    public function index($firstname = NULL, $infix = NULL, $lastname = NULL)
+    public function __construct()
     {
-        /**
-         * Het $data-array geeft informatie mee aan de view-pagina
-         */
+        $this->leverancierModel = $this->model('Leverancier');
+    }
+    public function index()
+    {
+
         $data = [
-            'title' => 'Dit is de homepage!',
-            'name' => 'Mijn naam is Arjan de Ruijter'
+            'Magazijn'             => null,
+            'message'               => '',
+            'messageColor'          => '',
+            'messageVisibility'     => 'none'
         ];
 
-        /**
-         * Met de view-method uit de BaseController-class wordt de view
-         * aangeroepen met de informatie uit het $data-array
-         */
-        $this->view('homepages/index', $data);
+        $data['Leveranciers'] = $this->leverancierModel->LeverancierOverzicht();
+
+        $this->view('leverancier/index', $data);
     }
 }

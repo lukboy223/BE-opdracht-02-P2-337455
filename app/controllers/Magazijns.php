@@ -63,7 +63,6 @@ class Magazijns extends BaseController
 
             header('Refresh:4;' .  URLROOT . '/Magazijns/index');
         } else {
-            echo $Aantal;
             $data = [
                 "LeverancierNaam"       => $products[0]->LeverancierNaam,
                 "ContactPersoon"        => $products[0]->ContactPersoon,

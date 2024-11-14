@@ -5,6 +5,10 @@ class Homepages extends BaseController
 
     public function index()
     {
-        $this->view('homepages/index');
+        $data = [
+            'title' => 'Dit is de homepage!',
+        ];
+
+        $this->view('homepages/index', $data);
     }
 }

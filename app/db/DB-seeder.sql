@@ -57,7 +57,7 @@ INSERT INTO Leverancier (Naam, ContactPersoon, LeverancierNummer, Mobiel) VALUES
 ('Haribo',          'Sven Stalman',         'L1029324748', '06-24383291'),
 ('Basset',          'Joyce Stelterberg',    'L1023845773', '06-48293823'), 
 ('De Bron',         'Remco Veenstra',       'L1023857736', '06-34291234'),
-('Quality Street',  'Jogan Nooij',          'L1029234586', '06-23458456')
+('Quality Street',  'Jogan Nooij',          'L1029234586', '06-23458456');
 
 INSERT INTO ProductPerLeverancier (LeverancierId, ProductId, DatumLevering, Aantal, DatumEerstVolgendeLevering) VALUES
 (1, 1, '2024-11-09', 23, '2024-11-16'), 
