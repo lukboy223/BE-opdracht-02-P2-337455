@@ -51,7 +51,7 @@
                             <td>{$Leverancier->LeverancierNummer}</td>
                             <td>{$Leverancier->Mobiel}</td>
                             <td>{$Leverancier->VerProducten}</td>
-                            <td><a href='" . URLROOT . "/Leveranciers/viewLeverancier/{$Leverancier->LeverancierId}'> <i class='bi bi-box'></i></td>
+                            <td><a href='" . URLROOT . "/Leveranciers/viewProducts/{$Leverancier->LeverancierId}'> <i class='bi bi-box'></i></td>
                            
                             </tr>";
                         }

@@ -23,4 +23,33 @@ class Leverancier
             logger(__LINE__, __METHOD__, __FILE__, $e->getMessage());
         }
     }
+
+    public function ReadProductLeverancierByLevId($id){
+        try {
+
+            $sql = "CALL spReadProductLeverancierByLevId($id)";
+
+            $this->db->query($sql);
+
+            return $this->db->resultSet();
+            
+        } catch (Exception $e) {
+            
+            logger(__LINE__, __METHOD__, __FILE__, $e->getMessage());
+        }
+    }
+    public function ReadLeverancierById($id){
+        try {
+
+            $sql = "CALL spReadLeverancierById($id)";
+
+            $this->db->query($sql);
+
+            return $this->db->single();
+            
+        } catch (Exception $e) {
+            
+            logger(__LINE__, __METHOD__, __FILE__, $e->getMessage());
+        }
+    }
 }
