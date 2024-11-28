@@ -16,7 +16,7 @@ CREATE PROCEDURE spReadProductLeverancierByLevId(
 BEGIN
 SELECT
      LevPro.ProductId
-    ,magazijn.AantalAanwezig
+    ,(magazijn.AantalAanwezig + LevPro.Aantal) as AantalAanwezig
     ,magazijn.VerpakingsInhoudKilogram
     ,Product.Naam                               AS ProductNaam
     ,LevPro.DatumLevering
@@ -26,6 +26,7 @@ ON LevPro.ProductId              = Product.Id
 INNER JOIN magazijn
 ON LevPro.ProductId              = magazijn.ProductId
 WHERE LevPro.LeverancierId       = GivenLevId
+group by Product.Naam
 ORDER BY LevPro.DatumLevering;
 
 

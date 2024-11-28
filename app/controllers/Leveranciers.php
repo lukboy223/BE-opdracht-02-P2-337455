@@ -35,24 +35,31 @@ class Leveranciers extends BaseController
 
         $products = $this->leverancierModel->ReadProductLeverancierByLevId($leverancierId);
         $LeverancierInfo = $this->leverancierModel->ReadLeverancierById($leverancierId);
-        var_dump($LeverancierInfo);
         
-
         if (empty($products)) {
-            $this->index("Geen informatie gevonden met van die leverancier.");
+           
+            $productsData = $products;
+            $message = 'Dit bedrijf heeft tot nu toe geen producten geleverd aan Jamin';
+            $messageColor = 'alert-danger';
+            $messageVisibility = 'flex';
+            header('Refresh:3;' .  URLROOT . '/leveranciers/index');
         } else {
-            $data = [
-                "LeverancierNaam"       => $products[0]->LeverancierNaam,
-                "ContactPersoon"        => $products[0]->ContactPersoon,
-                "LeverancierNummer"     => $products[0]->LeverancierNummer,
-                "Mobiel"                => $products[0]->Mobiel,
-                "Products"              => $products,
-                'message'               => '0',
-                'messageColor'          => '',
-                'messageVisibility'     => 'none'
-            ];
-            $this->view('leveranciers/view', $data);
+            $productsData = $products;
+            $message = '';
+            $messageColor = '';
+            $messageVisibility = '';
         }
+        $data = [
+            "LeverancierNaam"       => $LeverancierInfo->LeverancierNaam,
+            "ContactPersoon"        => $LeverancierInfo->ContactPersoon,
+            "LeverancierNummer"     => $LeverancierInfo->LeverancierNummer,
+            "Mobiel"                => $LeverancierInfo->Mobiel,
+            "Products"              => $productsData,
+            'message'               => $message,
+            'messageColor'          => $messageColor,
+            'messageVisibility'     => $messageVisibility
+        ];
+        $this->view('leveranciers/view', $data);
     }
 
     public function AddLevering()
