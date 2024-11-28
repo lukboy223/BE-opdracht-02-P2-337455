@@ -8,15 +8,17 @@ CREATE PROCEDURE spReadLeverancier()
 BEGIN
     SELECT
        LEV.id as LeverancierId,
-       Naam AS LeverancierNaam,
+       LEV.Naam AS LeverancierNaam,
        ContactPersoon,
        LeverancierNummer,
        Mobiel,
-       COUNT(PRO.ProductId) AS VerProducten
+       COUNT(DISTINCT PRO.Naam) AS VerProducten
     FROM Leverancier AS LEV
-    LEFT JOIN ProductPerLeverancier AS PRO
-    ON LEV.id = PRO.LeverancierId
-    GROUP BY LEV.id, Naam, ContactPersoon, LeverancierNummer, Mobiel
+    LEFT JOIN ProductPerLeverancier AS PROLev
+    ON LEV.id = PROLev.LeverancierId
+    left join Product as PRO
+    on PROLev.ProductId = PRO.Id
+    GROUP BY LEV.id, LeverancierNaam
     ORDER BY VerProducten DESC;
 END //
 
