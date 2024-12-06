@@ -19,7 +19,7 @@ class Leveranciers extends BaseController
         }
 
         $data = [
-            'Magazijn'             => null,
+            'Magazijn'              => null,
             'message'               => $error,
             'messageColor'          => $color,
             'messageVisibility'     => $visibility
@@ -62,8 +62,51 @@ class Leveranciers extends BaseController
         $this->view('leveranciers/view', $data);
     }
 
-    public function AddLevering()
+    public function AddLevering(int $productId = null)
     {
-        
+
+        $data = [
+            'Data'                  => null,
+            'aantalLev'             => '',
+            'aantalLevError'        => '',
+            'datumLev'              => '',
+            'datumLevError'         => '',
+            'message'               => '',
+            'messageColor'          => '',
+            'messageVisibility'     => ''
+        ];
+
+        $data['data'] = $this->leverancierModel->ReadProductLeverancierByProId($productId);    
+
+        var_dump($data);
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            $data['aantalLev'] = trim($_POST['aantalLev']);
+            $data['datumLev'] = trim($_POST['datumLev']);
+
+            
+
+            
+
+        }
+        $this->view('leveranciers/create', $data);
+    }
+
+    public function AddLeveringValidation($data)
+    {
+        if(empty($data['aantalLev'])){
+            $data['aantalLevError'] = 'Vul het aantal in';
+        }elseif(!is_numeric($data['aantalLev'])){
+            $data['aantalLevError'] = 'Vul een geldig getal in';
+        }
+        if(empty($data['datumLev'])){
+            $data['datumLevError'] = 'Vul de datum in';
+        }elseif(!preg_match('/^\d{4}-\d{2}-\d{2}$/', $data['datumLev'])){
+            $data['datumLevError'] = 'Vul een geldige datum in';
+        }
     }
 }
