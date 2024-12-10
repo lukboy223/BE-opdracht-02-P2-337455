@@ -49,7 +49,7 @@
         <div class="col-2"></div>
         <div class="col-8">
            
-            <a href="<?= URLROOT; ?>/magazijns/index">Terug</a>
+            <a href="<?= URLROOT; ?>/leveranciers/index">Terug</a>
         </div>
         <div class="col-2"></div>
     </div>
