@@ -52,4 +52,21 @@ class Magazijn
             logger(__LINE__, __METHOD__, __FILE__, $e->getMessage());
         }
     }
+    public function UpdateLeverancierPerProduct($data){
+        try {
+
+            $sql = "CALL spUpdateLeverancierPerProduct(:id, :levId)";
+
+            $this->db->query($sql);
+
+            $this->db->bind(':id', $data['id']);
+            $this->db->bind(':levId', $data['levId']);
+
+            return $this->db->execute();
+            
+        } catch (Exception $e) {
+            
+            logger(__LINE__, __METHOD__, __FILE__, $e->getMessage());
+        }
+    }
 }

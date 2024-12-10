@@ -18,7 +18,7 @@ CREATE PROCEDURE spUpdateLeverancierPerProduct
 
 BEGIN
 
-update LeverancierPerProduct
+update productperleverancier
 SET 
     DatumLevering = DatumLev
     ,Aantal = AantalLev

@@ -44,7 +44,7 @@
                 <td>{$Product->AantalAanwezig}</td>
                 <td>{$Product->VerpakingsInhoudKilogram}</td>
                 <td>{$Product->DatumLevering}</td>
-                <td><a href='" . URLROOT . "/Leveranciers/AddLevering/{$Product->ProductId}'><i class='bi bi-plus-lg'></i></td>
+                <td><a href='" . URLROOT . "/Leveranciers/AddLevering/{$Product->ProductId}'><i class='bi bi-plus-lg'></i></a></td>
                 ";
             }
             ?>

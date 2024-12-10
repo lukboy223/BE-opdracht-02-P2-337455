@@ -17,6 +17,7 @@ BEGIN
 SELECT
     ProductPerLeverAncier.Id as PPLId
     ,Product.Naam AS ProductNaam
+    ,ProductPerLeverAncier.isActief
     ,Leverancier.Naam AS LeverancierNaam
     ,Leverancier.ContactPersoon
     ,Leverancier.LeverancierNummer

@@ -10,10 +10,10 @@ class Leveranciers extends BaseController
     }
     public function index($error = null)
     {
-        if(!is_null($error)){
+        if (!is_null($error)) {
             $color = 'alert-danger';
             $visibility = 'flex';
-        }else{
+        } else {
             $color = '';
             $visibility = '';
         }
@@ -35,9 +35,9 @@ class Leveranciers extends BaseController
 
         $products = $this->leverancierModel->ReadProductLeverancierByLevId($leverancierId);
         $LeverancierInfo = $this->leverancierModel->ReadLeverancierById($leverancierId);
-        
+
         if (empty($products)) {
-           
+
             $productsData = $products;
             $message = 'Dit bedrijf heeft tot nu toe geen producten geleverd aan Jamin';
             $messageColor = 'alert-danger';
@@ -64,49 +64,80 @@ class Leveranciers extends BaseController
 
     public function AddLevering(int $productId = null)
     {
-
-        $data = [
-            'Data'                  => null,
-            'aantalLev'             => '',
-            'aantalLevError'        => '',
-            'datumLev'              => '',
-            'datumLevError'         => '',
-            'message'               => '',
-            'messageColor'          => '',
-            'messageVisibility'     => ''
-        ];
-
-        $data['data'] = $this->leverancierModel->ReadProductLeverancierByProId($productId);    
-
-        var_dump($data);
-
-        if($_SERVER['REQUEST_METHOD'] == 'POST')
-        {
-            
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-            $data['aantalLev'] = trim($_POST['aantalLev']);
-            $data['datumLev'] = trim($_POST['datumLev']);
-
-            
-
-            
-
+        if(is_null($productId)){
+            $DBdata = $this->leverancierModel->ReadProductLeverancierByProId($_POST['productId']);
+        }else{
+            $DBdata = $this->leverancierModel->ReadProductLeverancierByProId($productId);
         }
-        $this->view('leveranciers/create', $data);
+        if (empty($DBdata)) {
+            $this->index('Product niet gevonden');
+        } else if($DBdata[0]->isActief == 0){
+            $this->index('Dit product wordt niet meer geleverd');
+        }else {
+
+            $data = [
+                'PPLId'                 => $DBdata[0]->PPLId,
+                'ProductNaam'           => $DBdata[0]->ProductNaam,
+                'LeverancierNaam'       => $DBdata[0]->LeverancierNaam,
+                'ContactPersoon'        => $DBdata[0]->ContactPersoon,
+                'LeverancierNummer'     => $DBdata[0]->LeverancierNummer,
+                'Mobiel'                => $DBdata[0]->Mobiel,
+                'aantalLev'             => '',
+                'aantalLevError'        => '',
+                'datumLev'              => '',
+                'datumLevError'         => '',
+                'message'               => '',
+                'messageColor'          => '',
+                'messageVisibility'     => '',
+                'productId'             => null
+            ];
+            if(is_null($productId)){
+                $data['productId'] = $_POST['productId'];
+            }else{
+                $data['productId'] = $productId;
+            }
+
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                $data['aantalLev'] = trim($_POST['aantalLev']);
+                $data['datumLev'] = trim($_POST['datumLev']);
+
+                $data = $this->AddLeveringValidation($data);
+
+                if (
+                    empty($data['aantalLevError']) &&
+                    empty($data['datumLevError'])
+                ) {
+                    $ModelData = [
+                        'PPLId'         => $data['PPLId'],
+                        'DatumLev'      => $data['datumLev'],
+                        'AantalLev'     => $data['aantalLev']
+                    ];
+                    $this->leverancierModel->UpdateLeverancierPerProduct($ModelData);
+                    header('Location:' . URLROOT . '/leveranciers/index');
+                } else {
+                    $this->view('leveranciers/create', $data);
+                }
+            } else {
+                $this->view('leveranciers/create', $data);
+            }
+        }
     }
 
     public function AddLeveringValidation($data)
     {
-        if(empty($data['aantalLev'])){
+        if (empty($data['aantalLev'])) {
             $data['aantalLevError'] = 'Vul het aantal in';
-        }elseif(!is_numeric($data['aantalLev'])){
+        } elseif (!is_numeric($data['aantalLev'])) {
             $data['aantalLevError'] = 'Vul een geldig getal in';
         }
-        if(empty($data['datumLev'])){
+        if (empty($data['datumLev'])) {
             $data['datumLevError'] = 'Vul de datum in';
-        }elseif(!preg_match('/^\d{4}-\d{2}-\d{2}$/', $data['datumLev'])){
+        } elseif (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $data['datumLev'])) {
             $data['datumLevError'] = 'Vul een geldige datum in';
         }
+        return $data;
     }
 }

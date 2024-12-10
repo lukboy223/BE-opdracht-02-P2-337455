@@ -15,11 +15,11 @@
         <div class="col-8">
             <h3>Levering product</h3>
             <ul>
-                <li>Product naam: <?= $data['data'][0]->ProductNaam ?></li>
-                <li>Leverancier: <?= $data['data'][0]->LeverancierNaam ?></li>
-                <li>Contact persoon: <?=$data['data'][0]->ContactPersoon ?></li>
-                <li>Leverancier Nummer: <?= $data['data'][0]->LeverancierNummer ?></li>
-                <li>Mobiel: <?= $data['data'][0]->Mobiel ?></li>
+                <li>Product naam: <?= $data['ProductNaam'] ?></li>
+                <li>Leverancier: <?= $data['LeverancierNaam'] ?></li>
+                <li>Contact persoon: <?=$data['ContactPersoon']?></li>
+                <li>Leverancier Nummer: <?= $data['LeverancierNummer'] ?></li>
+                <li>Mobiel: <?= $data['Mobiel'] ?></li>
             </ul>
         </div>
         <div class="col-2"></div>
@@ -37,7 +37,8 @@
                     <div class="errorFrom"><?= $data['datumLevError'] ?></div>
                 </div>
 
-                <input type="hidden" name="PPLId" value="<?= $data['data'][0]->PPLId ?>">
+                <input type="hidden" name="PPLId" value="<?= $data['PPLId'] ?>">
+                <input type="hidden" name="productId" value="<?= $data['productId'] ?>">
 
                 <div class="d-grid">
                     <button type="submit" class="btn btn-success">Sla op</button>

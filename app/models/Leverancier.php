@@ -69,4 +69,22 @@ class Leverancier
             logger(__LINE__, __METHOD__, __FILE__, $e->getMessage());
         }
     }
+    public function UpdateLeverancierPerProduct($data){
+        try {
+
+            $sql = "CALL spUpdateLeverancierPerProduct(:PPLID, :DatumLev, :AantalLev)";
+
+            $this->db->query($sql);
+
+            $this->db->bind(':PPLID', $data['PPLId'], PDO::PARAM_INT);
+            $this->db->bind(':DatumLev', $data['DatumLev'], PDO::PARAM_STR);
+            $this->db->bind(':AantalLev', $data['AantalLev'], PDO::PARAM_INT);
+
+            return $this->db->execute();
+            
+        } catch (Exception $e) {
+            
+            logger(__LINE__, __METHOD__, __FILE__, $e->getMessage());
+        }
+    }
 }
